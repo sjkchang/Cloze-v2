@@ -14,9 +14,7 @@ const challengeRoutes = require('./routes/challenges.js');
 
 
 
-
-
-app.use(cors);
+//app.use(cors);
 app.use(express.json());
 
 app.use('/user', userRoutes);
@@ -29,5 +27,6 @@ const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 const connection = mongoose.connection;
 connection.once('open', () => console.log("MongoDB database connection established"))
+
 
 app.listen(port, () => console.log(`Cloze V2 is running at http://localhost:${port}`));
