@@ -3,9 +3,9 @@ const router = express.Router();
 
 router.get('/', (req, res) => res.send('GET route on user routes.'));
 
-router.get('/:id([0-9])', (req, res) => res.send('The user ID is ' + req.params.id));
+router.get('/:id([0-9]{5})', (req, res) => res.send('The user ID is ' + req.params.id));
 router.get('/:username(^[a-zA-Z0-9äöüÄÖÜ]*$)', (req, res) => res.send('The username is ' + req.params.username));
-router.get('/:email', (req, res) => res.send('The email is ' + req.params.email))
+//router.get('/:email', (req, res) => res.send('The email is ' + req.params.email))
 
 
 router.post('/:username(^[a-zA-Z0-9äöüÄÖÜ]*$)/:email()', (req, res) => res.send('POST, Username:' + req.params.username + 'Email: ' + req.params.email));
