@@ -1,16 +1,38 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
+const bcrypt = require('bcrypt');
+let User = require('../models/user.model');
 
-router.get('/', (req, res) => res.send('GET route on user routes.'));
+//Get response of all users
+router.get('/', (req, res) => {
+    User.find()
+        .then(users => res.json(users))
+        .catch(error => res.status(400).json('Error: ' + error))
+});
 
-router.get('/:id([0-9]{5})', (req, res) => res.send('The user ID is ' + req.params.id));
-//router.get('/:username({8-20}})', (req, res) => res.send('The username is ' + req.params.username));
-//router.get('/:email', (req, res) => res.send('The email is ' + req.params.email))
+//Add a new user
+router.post('/add', (req, res) => {
+    const username = req.body.username;
+    const name = req.body.name;
+    const password = req.body.password;
+    const password_hash = bcrypt.hashSync(password, 10);
+    const newUser = new User({username: username, name: name, password_hash: password_hash});
 
+    newUser.save()
+        .then(() => res.json('User ' + username + ' added!'))
+        .catch(error => {
+            res.status(400).json('Error: ' + error);
+            console.log(error);
+        })
+});
 
-router.post('/:username(^[a-zA-Z0-9äöüÄÖÜ]*$)/:email()', (req, res) => res.send('POST, Username:' + req.params.username + 'Email: ' + req.params.email));
+//Get JSON data on specific user based off of username
+router.get('/:username', (req, res) => {
+    username = req.params.username;
+    User.find({ username: {$eq: username} })
+        .then(user => res.json(user))
+        .catch(error => res.status(400).json('Error: ' + error));
+});
 
-router.put('/:id([0-9])/:username(^[a-zA-Z0-9äöüÄÖÜ]*$)/:email()', (req, res) => res.send('POST route on user routes.'));
 
 
 //export this router to use in our index.js
