@@ -46,7 +46,7 @@ router.put('/edit', (req, res) =>{
     User.findOneAndUpdate({username: old_username}, {$set: {username: username}, password_hash: password_hash}, {multi: true, new: true})
         .then((user) => {
             if(user) {
-                bcrypt.compare(password, user.toObject().password_hash, (err, result) =>{
+                bcrypt.compare(old_password, user.toObject().password_hash, (err, result) =>{
                     if(!result){
                         console.log('Running')
                         throw error = new Error('Passwords do not match')
