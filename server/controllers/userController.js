@@ -57,3 +57,13 @@ exports.edit_user = (req, res) => {
             console.log(error);
         });
 }
+
+exports.delete_user = (req, res) => {
+    const username = req.params.username;
+    User.findOneAndDelete({username: username})
+        .then(() => res.json('User ' + username + ' deleted!'))
+        .catch(error => {
+            res.status(400).json('Error: ' + error);
+            console.log(error);
+        })
+}

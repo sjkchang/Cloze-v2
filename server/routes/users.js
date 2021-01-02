@@ -15,6 +15,6 @@ router.get('/:username', user_controller.get_user);
 //Edit User
 router.put('/edit', user_controller.edit_user);
 
-
+router.delete('/:username', user_controller.delete_user);
 //export this router to use in our index.js
 module.exports = router;
