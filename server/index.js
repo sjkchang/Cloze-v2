@@ -13,6 +13,7 @@ const connectionParams={
     useFindAndModify: false
 }
 
+//Connect to MongoDB Atlas database
 mongoose.connect(uri,connectionParams)
     .then( () => {
         console.log('Connected to database ')

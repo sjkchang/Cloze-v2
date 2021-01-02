@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-let Task = require('../models/task.model');
-let User = require('../models/user.model');
+let Task = require('../models/taskModel');
+let User = require('../models/userModel');
 
 
 router.get('/', (req, res) => res.send('GET route on todo routes.'));
