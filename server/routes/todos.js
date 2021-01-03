@@ -1,13 +1,17 @@
-const express = require('express');
-const router = express.Router();
-
-let Task = require('../models/taskModel');
-let User = require('../models/userModel');
+const express = require('express').Router();
+const todo_controller = require('../controllers/todoController');
 
 
-router.get('/', (req, res) => res.send('GET route on todo routes.'));
+//Get list of all tasks
+router.get('/', todo_controller.list_all_tasks);
 
-router.post('/', (req, res) => res.send('POST route on todo routes.'));
+router.get('/:username', todo_controller.list_all_users_tasks);
+
+router.route('/:task')
+    .get(todo_controller.list_all_users_tasks)
+    .post(todo_controller.add_task)
+    .put(todo_controller.edit_task)
+    .delete(todo_controller.delete_task);
 
 //export this router to use in our index.js
 module.exports = router;
