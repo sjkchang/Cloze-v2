@@ -1,5 +1,4 @@
 const User = require('../models/userModel')
-const bcrypt = require('bcrypt');
 
 exports.list_all_users = (req, res) => {
     User.find()
@@ -17,9 +16,7 @@ exports.get_user = (req, res) => {
 exports.register_new_user = (req, res) => {
     const username = req.body.username;
     const name = req.body.name;
-    const password = req.body.password;
-    const password_hash = bcrypt.hashSync(password, 10);
-    const newUser = new User({username: username, name: name, password_hash: password_hash});
+    const newUser = new User({username: username, name: name});
 
     newUser.save()
         .then(() => res.json('User ' + username + ' added!'))
@@ -31,24 +28,13 @@ exports.register_new_user = (req, res) => {
 
 exports.edit_user = (req, res) => {
     const username = req.body.username;
-    const password = req.body.password;
+    const name = req.body.name;
     const old_username = req.body.old_username;
-    const old_password = req.params.old_password;
-    const password_hash = bcrypt.hashSync(password, 10);
-    
-    //let query = User.findOne({username: old_username});
-    //console.log(query);
 
-    User.findOneAndUpdate({username: old_username}, {$set: {username: username}, password_hash: password_hash}, {multi: true, new: true})
+    User.findOneAndUpdate({username: old_username}, {$set: {username: username, name: name}, {multi: true, new: true})
         .then((user) => {
             if(user) {
-                bcrypt.compare(old_password, user.toObject().password_hash, (err, result) =>{
-                    if(!result){
-                        throw error = new Error('Passwords do not match')
-                    } else {
-                        res.json('User' + old_username + ' has been updated to ' + username);
-                    }
-                }).catch(error => res.status(400).json('Error: ' + error));
+                res.json('User' + old_username + ' has been updated to ' + username);
             } else {
                 throw error = new Error('User does not Exist');
             }
