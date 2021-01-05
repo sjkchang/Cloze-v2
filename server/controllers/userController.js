@@ -31,7 +31,7 @@ exports.edit_user = (req, res) => {
     const name = req.body.name;
     const old_username = req.body.old_username;
 
-    User.findOneAndUpdate({username: old_username}, {$set: {username: username, name: name}, {multi: true, new: true})
+    User.findOneAndUpdate({username: old_username}, {$set: {username: username, name: name}})
         .then((user) => {
             if(user) {
                 res.json('User' + old_username + ' has been updated to ' + username);
@@ -42,6 +42,7 @@ exports.edit_user = (req, res) => {
             res.status(400).json('Error: ' + error);
             console.log(error);
         });
+    
 }
 
 exports.delete_user = (req, res) => {
