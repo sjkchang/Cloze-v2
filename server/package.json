@@ -4,7 +4,7 @@
   "description": "Cloze V2 Backend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node index.js"
   },
   "author": "Steven Chang",
@@ -16,5 +16,8 @@
     "express": "^4.17.1",
     "mongodb": "^3.6.3",
     "mongoose": "^5.11.8"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
