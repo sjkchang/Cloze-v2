@@ -47,3 +47,32 @@ exports.add_post = (req, res) => {
             res.status(400).json('Error: ' + error)
         })
 }
+
+exports.delete_post = (req, res) => {
+    const id = req.body.id;
+    Post.findOneAndDelete({_id: id})
+        .then(() => res.json('Post ' + id + ' deleted!'))
+        .catch(error => {
+            res.status(400).json('Error: ' + error);
+            console.log(error);
+        })
+}
+
+exports.edit_post = (req, res) => {
+    const title = req.body.title;
+    const content = req.body.content;
+    const id = req.body.id;
+
+    User.findOneAndUpdate({_id: id}, {$set: {title: title, content: content}})
+        .then((user) => {
+            if(user) {
+                res.json('Post' + title + ' has been updated');
+            } else {
+                throw error = new Error('User does not Exist');
+            }
+        }).catch(error => {
+            res.status(400).json('Error: ' + error);
+            console.log(error);
+        });
+    
+}
