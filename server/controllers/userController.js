@@ -31,7 +31,7 @@ exports.edit_user = (req, res) => {
 
     User.findOneAndUpdate({username: old_username}, {$set: {username: username, name: name}}, (err, user) => {
         if(err){res.status(400).json('Error: ' + error);}
-        res.json('User' + user.username + ' has been updated to ' + username);
+        res.json('User ' + user.username + ' has been updated to ' + username);
     })
 }
 
